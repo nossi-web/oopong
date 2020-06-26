@@ -1,0 +1,10 @@
+/*
+ * filename: main.css
+ *
+ */
+
+canvas {
+    background-color: #000;
+    display: block;
+    margin: 0 auto;
+}

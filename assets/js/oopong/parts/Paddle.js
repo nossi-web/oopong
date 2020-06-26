@@ -6,16 +6,24 @@
  * 
  */
 
+import Pong from "../Pong.js";
+
 export default class Paddle {
 
     // class props
+    _ctx; // a reference to the canvas element context element, used for drawing the paddle on the canvas. 
     _xPos = {};
     _yPos = {};
     _yVel = {};
 
-    constructor() {
+    // when the paddle is constructed, we'll accept parameters to dictate its starting place on the canvas, 
+    // as well as it's initial color.
+    // we'll also have to pass in a reference to the particular canvas element upon which we want it drawn. 
+    constructor(xPos, yPos, width, height, color) {
 
-        // create instances of the parts
+        // draw a paddle on the canvas. 
+        Pong._ctx.fillStyle = color;
+        Pong._ctx.fillRect(xPos, yPos, width, height);
 
         // Making sure I did things right
         console.log("Paddles done... maybe")

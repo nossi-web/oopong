@@ -27,4 +27,10 @@ export default class Ball {
     booped() {
 
     }
+
+    update() {
+
+        // console.log("ball updated");
+
+    }
 }

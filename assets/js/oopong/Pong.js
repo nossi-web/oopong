@@ -14,15 +14,22 @@ export default class Pong {
 
     // class props
     _playerOneScore;
-    _playerOneScore;
+    _playerTwoScore;
     static _scoreBoard = {};
     static _ball = {};
+
+    // player properties
     static _playerOnePaddle = {};
     static _playerTwoPaddle = {};
+    static _playerOneUpKey = 87;
+    static _playerOneDownKey = 83;
+    static _playerTwoUpKey = 79;
+    static _playerTwoDownKey = 76;
 
     // paddle props
     static _paddleWidth = 8;
     static _paddleHeight = 64;
+    static _paddleVelocity = 10;
     static _playerOneColor = "#5298E9";
     static _playerTwoColor = "#F25C5C";
 
@@ -32,6 +39,10 @@ export default class Pong {
 
     static _canvas;
     static _ctx;
+
+    static _keyMap = {};
+
+    static _setInterval;
 
     constructor() {
 
@@ -56,17 +67,23 @@ export default class Pong {
         Pong._playerOnePaddle = new Paddle(
             (Pong._canvas.width * .1) - (Pong._paddleWidth / 2),
             (Pong._canvas.height / 2) - (Pong._paddleHeight / 2),
+            Pong._paddleVelocity,
             Pong._paddleWidth,
             Pong._paddleHeight,
-            Pong._playerOneColor
+            Pong._playerOneColor,
+            Pong._playerOneUpKey,
+            Pong._playerOneDownKey
         );
 
         Pong._playerTwoPaddle = new Paddle(
             (Pong._canvas.width * .9) - (Pong._paddleWidth / 2),
             (Pong._canvas.height / 2) - (Pong._paddleHeight / 2),
+            Pong._paddleVelocity,
             Pong._paddleWidth,
             Pong._paddleHeight,
             Pong._playerTwoColor,
+            Pong._playerTwoUpKey,
+            Pong._playerTwoDownKey
         );
 
 
@@ -78,9 +95,32 @@ export default class Pong {
             Pong._ballColor
         );
 
+        // populate the keymap with the correct values
+        Pong._keyMap[Pong._playerOneUpKey] = false;
+        Pong._keyMap[Pong._playerOneDownKey] = false;
+        Pong._keyMap[Pong._playerTwoUpKey] = false;
+        Pong._keyMap[Pong._playerTwoDownKey] = false;
 
+        // an event listener to check for keypresses
+        Pong._canvas.addEventListener('keydown', e => this.updateKeyMap(e), false);
+        Pong._canvas.addEventListener('keyup', e => this.updateKeyMap(e), false);
+
+        Pong._canvas.focus();
 
     }
+
+    updateKeyMap(e) {
+
+        // console.log(e.keyCode);
+        // console.log(e.type);
+
+        if (e.type == "keydown") Pong._keyMap[e.keyCode] = true;
+        if (e.type == "keyup") Pong._keyMap[e.keyCode] = false;
+
+        // console.log(Pong._keyMap);
+
+    }
+
 
     // position the parts on the canvas
     _setTable() {
@@ -90,6 +130,16 @@ export default class Pong {
 
     // positions the ball in the table center and gives it x & y velocity
     _serveBall() {
+
+    }
+
+    update() {
+
+        console.log("==================================");
+        console.log(Pong._keyMap);
+        Pong._ball.update();
+        Pong._playerOnePaddle.update();
+        Pong._playerTwoPaddle.update();
 
     }
 
